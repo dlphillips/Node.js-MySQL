@@ -21,8 +21,8 @@ var selItem = "";
 var selQty = 0;
 
 var placeOrder = function() {
-    connection.query("SELECT item_id as 'Item', product_name as 'Name', department_name as 'Department', concat('$', format(price, 2)) as 'Price', quantity as 'Quantity' from products", function(err, res) {
-        // connection.query("SELECT item_id as 'Item', product_name as 'Name', department_name as 'Department', concat('$', format(price, 2)) as 'Price' from products", function(err, res) {
+    // connection.query("SELECT item_id as 'Item', product_name as 'Name', department_name as 'Department', concat('$', format(price, 2)) as 'Price', quantity as 'Quantity' from products", function(err, res) {
+    connection.query("SELECT item_id as 'Item', product_name as 'Name', department_name as 'Department', concat('$', format(price, 2)) as 'Price' from products", function(err, res) {
         if (err) throw err;
         console.table(res);
         inquirer.prompt({
@@ -44,14 +44,14 @@ var placeOrder = function() {
                     } else {
                         connection.query("UPDATE products SET quantity = quantity - ? WHERE ?", [selQty, { item_id: selItem }], function(err, res) {
                             if (err) throw err;
-                             connection.query("SELECT concat('$', format(price * ?, 2)) as 'Total_Paid' from products  WHERE ?", [selQty, { item_id: selItem }], function(err, res) {
+                            connection.query("SELECT concat('$', format(price * ?, 2)) as 'Total_Paid' from products  WHERE ?", [selQty, { item_id: selItem }], function(err, res) {
                                 if (err) throw err;
                                 console.log('');
                                 console.table(res);
                                 placeOrder();
                             });
                         });
-                        
+
                     }
                 });
             });
