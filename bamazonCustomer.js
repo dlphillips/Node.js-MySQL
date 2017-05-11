@@ -44,14 +44,14 @@ var placeOrder = function() {
                     } else {
                         connection.query("UPDATE products SET quantity = quantity - ? WHERE ?", [selQty, { item_id: selItem }], function(err, res) {
                             if (err) throw err;
-                            console.log('');
-                            console.log('Thank you for your purchase. Here is your receipt:');
-                            connection.query("SELECT concat('$', format(price * ?, 2)) as 'Total' from products  WHERE ?", [selQty, { item_id: selItem }], function(err, res) {
+                             connection.query("SELECT concat('$', format(price * ?, 2)) as 'Total_Paid' from products  WHERE ?", [selQty, { item_id: selItem }], function(err, res) {
                                 if (err) throw err;
+                                console.log('');
                                 console.table(res);
+                                placeOrder();
                             });
                         });
-	                    // placeOrder();
+                        
                     }
                 });
             });
