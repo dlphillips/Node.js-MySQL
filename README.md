@@ -4,7 +4,7 @@ This is a homework project for the UNC Charlotte Coding Bootcamp. In it, I used 
 
 ## Installation
 
-Clone or download this repo to a new folder on your system then run NPM Install in your terminal window. You will need to have MySQL running on your system. Bamazon.sql is included in this repo for you to easily recreate the database along with some sample data.
+Clone or download this repo to a new folder on your system then run npm install in your terminal window. You will need to have MySQL running on your system. Bamazon.sql is included in this repo for you to easily recreate the database along with some sample data.
 
 ## Usage
 
