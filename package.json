@@ -1,0 +1,29 @@
+{
+  "name": "nodejs-mysql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bamazonCustomer.js",
+  "dependencies": {
+    "console.table": "^0.8.0",
+    "inquirer": "^3.0.6",
+    "mysql": "^2.13.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node bamazonCustomer"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dlphillips/Node.js-MySQL.git"
+  },
+  "keywords": [
+    "Node.js",
+    "MySQL"
+  ],
+  "author": "Dan Phillips",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dlphillips/Node.js-MySQL/issues"
+  },
+  "homepage": "https://github.com/dlphillips/Node.js-MySQL#readme"
+}

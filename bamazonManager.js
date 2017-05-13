@@ -3,6 +3,7 @@ var inquirer = require('inquirer');
 var mysql = require("mysql");
 require("console.table");
 
+// connect to database
 var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
@@ -13,9 +14,11 @@ var connection = mysql.createConnection({
 
 connection.connect(function(err) {
     if (err) throw err;
-    menu();
+    menu(); // call main function
 });
 
+
+// initialize variables
 var selItem = "";
 var selQty = 0;
 
@@ -24,13 +27,7 @@ var newDepartment = "";
 var newPrice = 0;
 var newQuantity = 0;
 
-
-// product_name, department_name, price, quantity
-// newName, newDepartment, newPrice, newQuantity;
-
-
-// If a manager selects Add New Product, it should allow the manager to add a completely new product to the store.
-
+// prompt user for what they want and switch based on response
 var menu = function() {
     inquirer.prompt({
         name: "action",
@@ -40,7 +37,8 @@ var menu = function() {
             "View Products for Sale",
             "View Low Inventory",
             "Add to Inventory",
-            "Add New Product"
+            "Add New Product",
+            "Exit"
         ]
     }).then(function(answer) {
         switch (answer.action) {
@@ -59,10 +57,20 @@ var menu = function() {
             case "Add New Product":
                 newItem();
                 break;
+
+            case "Exit":
+                exitApp();
+                break;
         }
     });
 };
 
+// exit function
+var exitApp = function() {
+    process.exit(0);
+};
+
+// simple function to show all data in products table
 var viewProducts = function() {
     console.log('');
     console.log('***Full Inventory***');
@@ -74,6 +82,7 @@ var viewProducts = function() {
     });
 };
 
+// query products table for items with less than five in stock
 var viewLow = function() {
     console.log('');
     console.log('***LOW Inventory (quantity < 5)***');
@@ -85,6 +94,7 @@ var viewLow = function() {
     });
 };
 
+// prompt user for product and quantity and update matching record in products table
 var addInventory = function() {
     connection.query("SELECT item_id as 'Item', product_name as 'Name', department_name as 'Department', concat('$', format(price, 2)) as 'Price', quantity as 'Quantity' from products", function(err, res) {
         if (err) throw err;
@@ -98,7 +108,7 @@ var addInventory = function() {
             inquirer.prompt({
                 name: "qty",
                 type: "input",
-                message: "How many would you like to add?",
+                message: "What quantity would you like to add?",
             }).then(function(answer) {
                 selQty = answer.qty;
 
@@ -119,17 +129,18 @@ var addInventory = function() {
 
 };
 
+// prompt user for new product information and add new record in products table
 var newItem = function() {
 inquirer.prompt({
     name: "itemName",
     type: "input",
-    message: "What is the new item name",
+    message: "Enter the new item name:",
 }).then(function(answer) {
     newName = answer.itemName;
     inquirer.prompt({
         name: "itemDepartment",
         type: "input",
-        message: "What department is this for?",
+        message: "Enter the department:",
     }).then(function(answer) {
         newDepartment = answer.itemDepartment;
         inquirer.prompt({
@@ -144,8 +155,6 @@ inquirer.prompt({
                 message: "How many are in stock?",
             }).then(function(answer) {
                 newQuantity = answer.itemQuantity;
-
-                // console.log(newName, newDepartment, newPrice, newQuantity);
 
                 connection.query("INSERT INTO products (product_name, department_name, price, quantity) VALUES (?, ?, ?, ?)", [newName, newDepartment, newPrice, newQuantity], function(err, res) {
                     if (err) throw err;
