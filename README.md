@@ -11,7 +11,9 @@ Clone or download this repo to a new folder on your system then run NPM Install 
 There are three modules. You can run them as follows:
 
 node bamazonCustomer
+
 node bamazonManager
+
 node bamazonSupervisor
 
 Each will offer options that will allow you to manipulate the two tables in the database.
